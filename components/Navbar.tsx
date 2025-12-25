@@ -51,56 +51,50 @@ const Navbar: React.FC<NavbarProps> = ({ language, setLanguage, ui }) => {
   };
 
   return (
-    <nav className={`fixed w-full z-50 transition-all duration-300 ${scrolled ? 'bg-white/90 backdrop-blur-md shadow-sm py-3 border-b border-slate-100' : 'bg-transparent py-5'}`}>
-      <div className="container mx-auto px-4 md:px-8 flex justify-between items-center">
-        {/* Modern Logo */}
+    <nav className={`fixed w-full z-50 transition-all duration-300 ${scrolled ? 'bg-white/90 backdrop-blur-md shadow-aerial py-3' : 'bg-transparent py-6'}`}>
+      <div className="container mx-auto px-6 md:px-12 flex justify-between items-center">
+        {/* Logo */}
         <a 
             href="#home" 
             onClick={(e) => scrollToSection(e, '#home')}
             className="flex items-center gap-3 group cursor-pointer select-none"
         >
-          <div className="relative w-9 h-9 flex items-center justify-center">
-             {/* Geometric Icon */}
-             <div className={`absolute inset-0 border-2 rounded-sm transform rotate-45 transition-all duration-500 group-hover:rotate-90 group-hover:scale-110 ${scrolled ? 'border-slate-800' : 'border-white'}`}></div>
-             <div className="w-2 h-2 bg-accent rounded-full shadow-[0_0_10px_rgba(14,165,233,0.6)]"></div>
+          <div className="w-10 h-10 bg-accent rounded-xl flex items-center justify-center transform rotate-3 group-hover:rotate-12 transition-transform duration-300 shadow-lg shadow-accent/40">
+             <span className="text-white font-bold text-xl">A</span>
           </div>
           
-          {/* Typographic Name */}
           <div className="flex flex-col justify-center">
-             <span className={`font-bold text-xl leading-none tracking-tight ${scrolled ? 'text-slate-900' : 'text-white'}`}>
-                Ahmed
-             </span>
-             <span className={`text-[0.6rem] uppercase tracking-[0.3em] font-medium leading-none mt-1 pl-0.5 ${scrolled ? 'text-slate-500' : 'text-slate-300'}`}>
-                Znouda
+             <span className={`font-bold text-xl leading-none tracking-tight ${scrolled ? 'text-primary' : 'text-white'}`}>
+                Ahmed<span className="text-accent">.</span>
              </span>
           </div>
         </a>
 
         {/* Desktop Menu */}
-        <div className="hidden md:flex items-center space-x-8">
+        <div className="hidden md:flex items-center space-x-10">
           {ui.nav.map((link) => (
             <a
               key={link.name}
               href={link.href}
               onClick={(e) => scrollToSection(e, link.href)}
-              className={`text-sm font-medium transition-all duration-200 relative group cursor-pointer ${
+              className={`text-sm font-medium transition-all duration-200 relative group cursor-pointer tracking-wide ${
                 activeSection === link.id 
                   ? 'text-accent' 
-                  : scrolled ? 'text-slate-600 hover:text-accent' : 'text-slate-300 hover:text-white'
+                  : scrolled ? 'text-secondary hover:text-accent' : 'text-slate-300 hover:text-white'
               }`}
             >
               {link.name}
-              <span className={`absolute -bottom-1 left-0 w-0 h-0.5 bg-accent transition-all duration-300 group-hover:w-full ${activeSection === link.id ? 'w-full' : ''}`}></span>
+              <span className={`absolute -bottom-1 left-1/2 w-0 h-0.5 bg-accent transition-all duration-300 group-hover:w-full group-hover:left-0 ${activeSection === link.id ? 'w-full left-0' : ''}`}></span>
             </a>
           ))}
           
           {/* Language Toggle Desktop */}
           <button 
             onClick={toggleLanguage}
-            className={`flex items-center gap-1.5 text-sm font-semibold px-3 py-1.5 rounded-full border transition-all ${
+            className={`flex items-center gap-1.5 text-xs font-bold px-4 py-2 rounded-full border-2 transition-all uppercase tracking-wider ${
                 scrolled 
-                    ? 'border-slate-200 text-slate-600 hover:bg-slate-100' 
-                    : 'border-white/20 text-white hover:bg-white/10'
+                    ? 'border-primary text-primary hover:bg-primary hover:text-white' 
+                    : 'border-white/30 text-white hover:bg-white/20'
             }`}
           >
             <Globe size={14} />
@@ -110,7 +104,7 @@ const Navbar: React.FC<NavbarProps> = ({ language, setLanguage, ui }) => {
 
         {/* Mobile Menu Button */}
         <button
-          className={`md:hidden focus:outline-none transition-colors ${scrolled ? 'text-slate-800' : 'text-white'}`}
+          className={`md:hidden focus:outline-none transition-colors ${scrolled ? 'text-primary' : 'text-white'}`}
           onClick={() => setIsOpen(!isOpen)}
         >
           {isOpen ? <X size={28} className="text-accent" /> : <Menu size={28} />} 
@@ -119,24 +113,24 @@ const Navbar: React.FC<NavbarProps> = ({ language, setLanguage, ui }) => {
 
       {/* Mobile Menu Overlay */}
       {isOpen && (
-        <div className="md:hidden absolute top-full left-0 w-full bg-white shadow-lg py-4 px-4 flex flex-col space-y-2 border-t border-slate-100 animate-fade-in-down">
+        <div className="md:hidden absolute top-full left-0 w-full bg-white shadow-aerial py-6 px-6 flex flex-col space-y-3 border-t border-slate-100 animate-fade-in-down rounded-b-3xl">
           {ui.nav.map((link) => (
             <a
               key={link.name}
               href={link.href}
-              className={`text-slate-700 hover:text-accent hover:bg-slate-50 font-medium block p-3 rounded-lg transition-colors cursor-pointer ${activeSection === link.id ? 'bg-slate-50 text-accent' : ''}`}
+              className={`text-secondary hover:text-accent hover:bg-surface font-medium block p-4 rounded-xl transition-colors cursor-pointer ${activeSection === link.id ? 'bg-surface text-accent' : ''}`}
               onClick={(e) => scrollToSection(e, link.href)}
             >
               {link.name}
             </a>
           ))}
-          <div className="border-t border-slate-100 pt-2 mt-2">
+          <div className="pt-4 mt-2">
               <button 
                 onClick={toggleLanguage}
-                className="flex items-center justify-center w-full gap-2 text-slate-700 font-semibold p-3 rounded-lg hover:bg-slate-50"
+                className="flex items-center justify-center w-full gap-2 text-white bg-primary font-semibold p-4 rounded-xl hover:bg-primary/90 shadow-lg shadow-primary/30"
               >
                 <Globe size={18} />
-                {language === 'en' ? 'Switch to French' : 'Passer en Anglais'}
+                {language === 'en' ? 'Passer en Français' : 'Switch to English'}
               </button>
           </div>
         </div>

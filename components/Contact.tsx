@@ -61,23 +61,24 @@ const Contact: React.FC<ContactProps> = ({ contactInfo, ui, personalInfo }) => {
   ];
 
   return (
-    <section id="contact" className="bg-slate-900 text-white pt-24 pb-12">
+    <section id="contact" className="bg-primary text-white pt-24 pb-12 rounded-t-[3rem] -mt-10 relative z-10">
       <div className="container mx-auto px-4 md:px-8">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-12 md:gap-24 mb-16">
           {/* Contact Info */}
           <div>
             <h2 className="text-3xl font-bold mb-6">{ui.title}</h2>
+            <div className="w-12 h-1 bg-accent rounded-full mb-8"></div>
             <p className="text-slate-400 mb-10 leading-relaxed text-lg">
               {ui.subtitle}
             </p>
 
             <div className="space-y-8">
-              <div className="flex items-start gap-5">
-                <div className="p-3.5 bg-slate-800 rounded-xl border border-slate-700 group-hover:border-accent">
-                  <Phone className="text-accent" size={24} />
+              <div className="flex items-start gap-5 group">
+                <div className="p-4 bg-white/5 rounded-2xl border border-white/10 group-hover:bg-accent group-hover:border-accent transition-all duration-300">
+                  <Phone className="text-accent group-hover:text-white transition-colors" size={24} />
                 </div>
                 <div>
-                  <h3 className="font-semibold text-slate-200 mb-1">{ui.phoneLabel}</h3>
+                  <h3 className="font-semibold text-white mb-1">{ui.phoneLabel}</h3>
                   <div className="flex flex-col space-y-1">
                     {contactInfo.phone.map((num, idx) => (
                        <p key={idx} className="text-slate-400 hover:text-accent transition-colors cursor-pointer">{num}</p>
@@ -86,12 +87,12 @@ const Contact: React.FC<ContactProps> = ({ contactInfo, ui, personalInfo }) => {
                 </div>
               </div>
 
-              <div className="flex items-start gap-5">
-                <div className="p-3.5 bg-slate-800 rounded-xl border border-slate-700">
-                  <Mail className="text-accent" size={24} />
+              <div className="flex items-start gap-5 group">
+                <div className="p-4 bg-white/5 rounded-2xl border border-white/10 group-hover:bg-accent group-hover:border-accent transition-all duration-300">
+                  <Mail className="text-accent group-hover:text-white transition-colors" size={24} />
                 </div>
                 <div>
-                  <h3 className="font-semibold text-slate-200 mb-1">{ui.emailLabel}</h3>
+                  <h3 className="font-semibold text-white mb-1">{ui.emailLabel}</h3>
                   <div className="flex flex-col space-y-1">
                     {contactInfo.email.map((mail, idx) => (
                         <a key={idx} href={`mailto:${mail}`} className="text-slate-400 hover:text-accent transition-colors">
@@ -102,12 +103,12 @@ const Contact: React.FC<ContactProps> = ({ contactInfo, ui, personalInfo }) => {
                 </div>
               </div>
 
-              <div className="flex items-start gap-5">
-                <div className="p-3.5 bg-slate-800 rounded-xl border border-slate-700">
-                  <MapPin className="text-accent" size={24} />
+              <div className="flex items-start gap-5 group">
+                <div className="p-4 bg-white/5 rounded-2xl border border-white/10 group-hover:bg-accent group-hover:border-accent transition-all duration-300">
+                  <MapPin className="text-accent group-hover:text-white transition-colors" size={24} />
                 </div>
                 <div>
-                  <h3 className="font-semibold text-slate-200 mb-1">{ui.locationLabel}</h3>
+                  <h3 className="font-semibold text-white mb-1">{ui.locationLabel}</h3>
                   <p className="text-slate-400">{contactInfo.address}</p>
                 </div>
               </div>
@@ -121,7 +122,7 @@ const Contact: React.FC<ContactProps> = ({ contactInfo, ui, personalInfo }) => {
                             href={link.url}
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="p-3 bg-slate-800 border border-slate-700 hover:bg-accent hover:border-accent rounded-full transition-all duration-300 group"
+                            className="p-3 bg-white/5 border border-white/10 hover:bg-accent hover:border-accent rounded-full transition-all duration-300 group hover:-translate-y-1"
                             title={link.name}
                         >
                             {link.icon}
@@ -132,43 +133,43 @@ const Contact: React.FC<ContactProps> = ({ contactInfo, ui, personalInfo }) => {
           </div>
 
           {/* Contact Form */}
-          <div className="bg-white text-slate-900 p-8 md:p-10 rounded-2xl shadow-2xl shadow-black/20">
-            <h3 className="text-2xl font-bold mb-8 text-slate-900">{ui.formTitle}</h3>
+          <div className="bg-white text-primary p-8 md:p-12 rounded-3xl shadow-2xl shadow-black/20">
+            <h3 className="text-2xl font-bold mb-8 text-primary">{ui.formTitle}</h3>
             <form className="space-y-5" onSubmit={handleSubmit}>
               <div>
-                <label className="block text-sm font-semibold text-slate-700 mb-2">{ui.nameLabel}</label>
+                <label className="block text-sm font-bold text-secondary mb-2 uppercase tracking-wider">{ui.nameLabel}</label>
                 <input 
                     type="text" 
                     required
-                    className="w-full px-5 py-3 bg-slate-50 border border-slate-200 rounded-lg focus:ring-2 focus:ring-accent focus:border-accent focus:outline-none transition-all" 
+                    className="w-full px-5 py-4 bg-surface border-2 border-transparent focus:border-accent rounded-xl focus:outline-none transition-all font-medium" 
                     placeholder={ui.nameLabel}
                 />
               </div>
               <div>
-                <label className="block text-sm font-semibold text-slate-700 mb-2">{ui.emailInputLabel}</label>
+                <label className="block text-sm font-bold text-secondary mb-2 uppercase tracking-wider">{ui.emailInputLabel}</label>
                 <input 
                     type="email" 
                     required
-                    className="w-full px-5 py-3 bg-slate-50 border border-slate-200 rounded-lg focus:ring-2 focus:ring-accent focus:border-accent focus:outline-none transition-all" 
-                    placeholder="your.email@example.com" 
+                    className="w-full px-5 py-4 bg-surface border-2 border-transparent focus:border-accent rounded-xl focus:outline-none transition-all font-medium" 
+                    placeholder="hello@example.com" 
                 />
               </div>
               <div>
-                <label className="block text-sm font-semibold text-slate-700 mb-2">{ui.messageLabel}</label>
+                <label className="block text-sm font-bold text-secondary mb-2 uppercase tracking-wider">{ui.messageLabel}</label>
                 <textarea 
                     rows={4} 
                     required
-                    className="w-full px-5 py-3 bg-slate-50 border border-slate-200 rounded-lg focus:ring-2 focus:ring-accent focus:border-accent focus:outline-none resize-none transition-all" 
+                    className="w-full px-5 py-4 bg-surface border-2 border-transparent focus:border-accent rounded-xl focus:outline-none resize-none transition-all font-medium" 
                     placeholder={ui.messageLabel + "..."}
                 ></textarea>
               </div>
               <button 
                 type="submit"
                 disabled={formStatus !== 'idle'}
-                className={`w-full py-4 font-bold rounded-lg transition-all shadow-lg flex items-center justify-center gap-2
+                className={`w-full py-4 font-bold rounded-xl transition-all shadow-lg flex items-center justify-center gap-2 transform active:scale-95
                     ${formStatus === 'success' 
                         ? 'bg-green-500 hover:bg-green-600 text-white' 
-                        : 'bg-accent hover:bg-sky-600 text-white shadow-sky-500/25'
+                        : 'bg-primary hover:bg-[#34495e] text-white shadow-primary/30'
                     } ${formStatus === 'submitting' ? 'opacity-75 cursor-wait' : ''}`}
               >
                 {formStatus === 'idle' && (
@@ -185,7 +186,7 @@ const Contact: React.FC<ContactProps> = ({ contactInfo, ui, personalInfo }) => {
           </div>
         </div>
 
-        <div className="border-t border-slate-800 pt-8 text-center text-slate-500 text-sm">
+        <div className="border-t border-white/10 pt-8 text-center text-slate-400 text-sm">
           <p>&copy; {new Date().getFullYear()} {personalInfo.name}. {ui.footer}</p>
         </div>
       </div>
