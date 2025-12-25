@@ -169,7 +169,7 @@ export const content: { en: AppContent; fr: AppContent } = {
         description: "A modern cross-platform application (Web & Mobile) designed to streamline the distribution and management of gas bottles. Features include inventory tracking, delivery management, and reporting.",
         techStack: ["Flutter", "Dart", "Firebase", "Google Maps API"],
         type: "Mobile",
-        image: "https://picsum.photos/id/133/600/400"
+        image: "./gaztrack.jpg"
       },
       {
         id: 2,
@@ -403,7 +403,7 @@ export const content: { en: AppContent; fr: AppContent } = {
         description: "Une application multiplateforme moderne (Web & Mobile) conçue pour rationaliser la distribution et la gestion des bouteilles de gaz. Fonctionnalités incluant le suivi des stocks, la gestion des livraisons et le reporting.",
         techStack: ["Flutter", "Dart", "Firebase", "API Google Maps"],
         type: "Mobile",
-        image: "https://picsum.photos/id/133/600/400"
+        image: "./gaztrack.jpg"
       },
       {
         id: 2,
