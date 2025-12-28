@@ -1,7 +1,20 @@
-
-import React, { useState } from 'react';
-import { Phone, Mail, MapPin, Linkedin, Github, Send, CheckCircle, Facebook } from 'lucide-react';
+import React, { useState, useRef } from 'react';
+import { Phone, Mail, MapPin, Linkedin, Github, Send, CheckCircle, Facebook, AlertCircle } from 'lucide-react';
+import emailjs from '@emailjs/browser';
 import { ContactInfo, AppContent, UIContent } from '../types';
+
+// ==========================================
+// ⚙️ CONFIGURATION EMAILJS
+// ==========================================
+// Remplacez les valeurs ci-dessous par celles de votre compte EmailJS :
+// 1. Service ID: Trouvé dans l'onglet "Email Services"
+// 2. Template ID: Trouvé dans l'onglet "Email Templates"
+// 3. Public Key: Trouvé dans "Account" > "General"
+const EMAILJS_CONFIG = {
+  SERVICE_ID: "service_pxxk1ut",   // ex: "service_8x9..."
+  TEMPLATE_ID: "template_65qcolw", // ex: "template_3x9..."
+  PUBLIC_KEY: "-eaZq4I5RByl6-PLF"    // ex: "user_8x9..."
+};
 
 interface ContactProps {
   contactInfo: ContactInfo;
@@ -10,17 +23,48 @@ interface ContactProps {
 }
 
 const Contact: React.FC<ContactProps> = ({ contactInfo, ui, personalInfo }) => {
-  const [formStatus, setFormStatus] = useState<'idle' | 'submitting' | 'success'>('idle');
+  const [formStatus, setFormStatus] = useState<'idle' | 'submitting' | 'success' | 'error'>('idle');
+  const [errorMessage, setErrorMessage] = useState<string>('');
+  const form = useRef<HTMLFormElement>(null);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+
+    // Vérification basique des clés avant envoi
+    if (EMAILJS_CONFIG.SERVICE_ID === "YOUR_SERVICE_ID" || EMAILJS_CONFIG.PUBLIC_KEY === "YOUR_PUBLIC_KEY") {
+      alert("⚠️ Configuration EmailJS manquante dans le code (components/Contact.tsx).\nVeuillez ajouter vos clés API.");
+      return;
+    }
+
+    if (!form.current) return;
+    
     setFormStatus('submitting');
-    // Simulate network request
-    setTimeout(() => {
-      setFormStatus('success');
-      // Reset after 3 seconds
-      setTimeout(() => setFormStatus('idle'), 3000);
-    }, 1500);
+    setErrorMessage('');
+
+    emailjs.sendForm(
+      EMAILJS_CONFIG.SERVICE_ID,
+      EMAILJS_CONFIG.TEMPLATE_ID,
+      form.current,
+      EMAILJS_CONFIG.PUBLIC_KEY
+    )
+    .then((result) => {
+        console.log('EmailJS Success:', result.text);
+        setFormStatus('success');
+        if (form.current) form.current.reset();
+        
+        // Reset status after 5 seconds
+        setTimeout(() => {
+            setFormStatus('idle');
+        }, 5000);
+    }, (error) => {
+        console.error('EmailJS Error:', error.text);
+        setFormStatus('error');
+        setErrorMessage('Failed to send. Please try again or email directly.');
+        
+        setTimeout(() => {
+            setFormStatus('idle');
+        }, 5000);
+    });
   };
 
   const socialLinks = [
@@ -135,11 +179,13 @@ const Contact: React.FC<ContactProps> = ({ contactInfo, ui, personalInfo }) => {
           {/* Contact Form */}
           <div className="bg-white text-primary p-8 md:p-12 rounded-3xl shadow-2xl shadow-black/20">
             <h3 className="text-2xl font-bold mb-8 text-primary">{ui.formTitle}</h3>
-            <form className="space-y-5" onSubmit={handleSubmit}>
+            
+            <form ref={form} className="space-y-5" onSubmit={handleSubmit}>
               <div>
                 <label className="block text-sm font-bold text-secondary mb-2 uppercase tracking-wider">{ui.nameLabel}</label>
                 <input 
                     type="text" 
+                    name="user_name"
                     required
                     className="w-full px-5 py-4 bg-surface border-2 border-transparent focus:border-accent rounded-xl focus:outline-none transition-all font-medium" 
                     placeholder={ui.nameLabel}
@@ -149,6 +195,7 @@ const Contact: React.FC<ContactProps> = ({ contactInfo, ui, personalInfo }) => {
                 <label className="block text-sm font-bold text-secondary mb-2 uppercase tracking-wider">{ui.emailInputLabel}</label>
                 <input 
                     type="email" 
+                    name="user_email"
                     required
                     className="w-full px-5 py-4 bg-surface border-2 border-transparent focus:border-accent rounded-xl focus:outline-none transition-all font-medium" 
                     placeholder="hello@example.com" 
@@ -157,18 +204,22 @@ const Contact: React.FC<ContactProps> = ({ contactInfo, ui, personalInfo }) => {
               <div>
                 <label className="block text-sm font-bold text-secondary mb-2 uppercase tracking-wider">{ui.messageLabel}</label>
                 <textarea 
+                    name="message"
                     rows={4} 
                     required
                     className="w-full px-5 py-4 bg-surface border-2 border-transparent focus:border-accent rounded-xl focus:outline-none resize-none transition-all font-medium" 
                     placeholder={ui.messageLabel + "..."}
                 ></textarea>
               </div>
+              
               <button 
                 type="submit"
-                disabled={formStatus !== 'idle'}
+                disabled={formStatus === 'submitting'}
                 className={`w-full py-4 font-bold rounded-xl transition-all shadow-lg flex items-center justify-center gap-2 transform active:scale-95
                     ${formStatus === 'success' 
                         ? 'bg-green-500 hover:bg-green-600 text-white' 
+                        : formStatus === 'error'
+                        ? 'bg-red-500 hover:bg-red-600 text-white'
                         : 'bg-primary hover:bg-[#34495e] text-white shadow-primary/30'
                     } ${formStatus === 'submitting' ? 'opacity-75 cursor-wait' : ''}`}
               >
@@ -181,7 +232,14 @@ const Contact: React.FC<ContactProps> = ({ contactInfo, ui, personalInfo }) => {
                 {formStatus === 'success' && (
                     <>{ui.sentBtn} <CheckCircle size={18} /></>
                 )}
+                {formStatus === 'error' && (
+                    <>Error <AlertCircle size={18} /></>
+                )}
               </button>
+              
+              {errorMessage && (
+                  <p className="text-red-500 text-sm text-center mt-2">{errorMessage}</p>
+              )}
             </form>
           </div>
         </div>
