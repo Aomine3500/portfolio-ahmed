@@ -22,13 +22,7 @@ export default defineConfig(({ mode }) => {
         alias: {
           '@': path.resolve(__dirname, '.'),
         }
-      },
-      build: {
-        rollupOptions: {
-          // Ceci dit à Vite : "Ne cherche pas @emailjs/browser dans node_modules, 
-          // le navigateur le trouvera via l'importmap dans index.html"
-          external: ['@emailjs/browser'], 
-        }
       }
+      // Suppression du bloc build.rollupOptions.external pour tout inclure dans le bundle
     };
 });
