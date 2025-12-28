@@ -6,15 +6,10 @@ import { ContactInfo, AppContent, UIContent } from '../types';
 // ==========================================
 // ⚙️ CONFIGURATION EMAILJS
 // ==========================================
-// Remplacez les valeurs ci-dessous par celles de votre compte EmailJS :
-// 1. Service ID: Trouvé dans l'onglet "Email Services"
-// 2. Template ID: Trouvé dans l'onglet "Email Templates"
-// 3. Public Key: Trouvé dans "Account" > "General"
-// ==========================================
 const EMAILJS_CONFIG = {
-  SERVICE_ID: "service_pxxk1ut",   // ex: "service_8x9..."
-  TEMPLATE_ID: "template_65qcolw", // ex: "template_3x9..."
-  PUBLIC_KEY: "-eaZq4I5RByl6-PLF"    // ex: "user_8x9..."
+  SERVICE_ID: "service_pxxk1ut",   
+  TEMPLATE_ID: "template_65qcolw", 
+  PUBLIC_KEY: "-eaZq4I5RByl6-PLF"    
 };
 
 interface ContactProps {
@@ -30,12 +25,6 @@ const Contact: React.FC<ContactProps> = ({ contactInfo, ui, personalInfo }) => {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-
-    // Vérification basique des clés avant envoi
-    if (EMAILJS_CONFIG.SERVICE_ID === "YOUR_SERVICE_ID" || EMAILJS_CONFIG.PUBLIC_KEY === "YOUR_PUBLIC_KEY") {
-      alert("⚠️ Configuration EmailJS manquante dans le code (components/Contact.tsx).\nVeuillez ajouter vos clés API.");
-      return;
-    }
 
     if (!form.current) return;
     
@@ -53,14 +42,13 @@ const Contact: React.FC<ContactProps> = ({ contactInfo, ui, personalInfo }) => {
         setFormStatus('success');
         if (form.current) form.current.reset();
         
-        // Reset status after 5 seconds
         setTimeout(() => {
             setFormStatus('idle');
         }, 5000);
     }, (error) => {
         console.error('EmailJS Error:', error.text);
         setFormStatus('error');
-        setErrorMessage('Failed to send. Please try again or email directly.');
+        setErrorMessage('Failed to send. Please try again later.');
         
         setTimeout(() => {
             setFormStatus('idle');
