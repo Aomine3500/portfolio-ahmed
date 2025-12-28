@@ -23,6 +23,5 @@ export default defineConfig(({ mode }) => {
           '@': path.resolve(__dirname, '.'),
         }
       }
-      // Suppression du bloc build.rollupOptions.external pour tout inclure dans le bundle
     };
 });
