@@ -10,6 +10,7 @@ import { ContactInfo, AppContent, UIContent } from '../types';
 // 1. Service ID: Trouvé dans l'onglet "Email Services"
 // 2. Template ID: Trouvé dans l'onglet "Email Templates"
 // 3. Public Key: Trouvé dans "Account" > "General"
+// ==========================================
 const EMAILJS_CONFIG = {
   SERVICE_ID: "service_pxxk1ut",   // ex: "service_8x9..."
   TEMPLATE_ID: "template_65qcolw", // ex: "template_3x9..."
