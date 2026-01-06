@@ -3,9 +3,9 @@
 // import emailjs from '@emailjs/browser';
 // import { ContactInfo, AppContent, UIContent } from '../types';
 
-==========================================
-⚙️ CONFIGURATION EMAILJS
-==========================================
+// ==========================================
+// ⚙️ CONFIGURATION EMAILJS
+// ==========================================
 // const EMAILJS_CONFIG = {
   // SERVICE_ID: "service_pxxk1ut",   
   // TEMPLATE_ID: "template_65qcolw", 
