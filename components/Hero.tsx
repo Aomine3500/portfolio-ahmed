@@ -244,7 +244,7 @@ const Hero: React.FC<HeroProps> = ({ data, ui }) => {
                 <ChevronRight size={16} className="group-hover:translate-x-1 transition-transform" />
             </a>
             <a 
-                href="/resume.pdf"
+                href="/Ahmed_Znouda_CV.pdf"
                 download="Ahmed_Znouda_CV.pdf"
                 className="px-8 py-4 bg-transparent border-2 border-white/20 hover:bg-white/10 text-white rounded-full font-bold transition-all flex items-center justify-center gap-2 cursor-pointer hover:-translate-y-1"
             >
